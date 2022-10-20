@@ -2,6 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem "rails",           "7.0.3"
+gem "bootstrap-sass"
 gem "sassc-rails",     "2.1.2"
 gem "sprockets-rails", "3.4.2"
 gem "importmap-rails", "1.1.0"
@@ -17,6 +18,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "rubocop"
   gem "web-console", "4.2.0"
 end
 
