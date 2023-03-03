@@ -23,5 +23,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+
+    # 定義したテストヘルパーメソッドを利用してユーザ登録後ログイン画面に遷移しているか確認
+    assert is_logged_in?
   end
 end
