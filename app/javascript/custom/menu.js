@@ -1,7 +1,7 @@
 // メニュー操作
 
 //　トグルリスナーを追加
-function addToggleListener(selected_id, toggle_class){
+function addToggleListener(selected_id, menu_id, toggle_class){
   let selected_element = document.querySelector(`#${selected_id}`);
   selected_element.addEventListener('click', function(event){
     event.preventDefault();
