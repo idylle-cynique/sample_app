@@ -58,6 +58,6 @@ class UserTest < ActiveSupport::TestCase
 
   test 'authenticated? should return false for a user with nil digest' do
     # 永続化cookieにダイジェストが存在しない場合はエラーではなくfalseを返すようにしてあるかどうかを確認
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember, '')
   end
 end

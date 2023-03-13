@@ -18,10 +18,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      reset_session
-      log_in @user
-      flash[:success] = "Welcome to the Sample App"
-      redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = 'Please check your email to activate your account.'
+      redirect_to root_url
+      # reset_session
+      # log_in @user
+      # flash[:success] = "Welcome to the Sample App"
+      # redirect_to @user
     else
       render 'new', status: :unprocessable_entity
     end
@@ -48,26 +51,27 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
 
-    # ログイン済みユーザかどうかを確認
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url, status: :see_other
-      end
-    end
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
 
-    # リクエストを送っているユーザが正しいユーザかどうか確認
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url, status: :see_other) unless current_user?(@user)
+  # ログイン済みユーザかどうかを確認
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = "Please log in."
+      redirect_to login_url, status: :see_other
     end
+  end
 
-    def admin_user
-      redirect_to(root_url, status: :see_other) unless current_user.admin?
-    end
+  # リクエストを送っているユーザが正しいユーザかどうか確認
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url, status: :see_other) unless current_user?(@user)
+  end
+
+  def admin_user
+    redirect_to(root_url, status: :see_other) unless current_user.admin?
+  end
 end

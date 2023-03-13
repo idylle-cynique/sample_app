@@ -4,7 +4,9 @@ User.create!(
   email: "example@railstutorial.org",
   password: "foobar",
   password_confirmation: "foobar",
-  admin: true
+  admin: true,
+  activated: true,
+  activated_at: Time.zone.now
 )
 
 N = 99
@@ -16,6 +18,8 @@ N.times do |n|
     name: name,
     email: email,
     password: password,
-    password_confirmation: password
+    password_confirmation: password,
+    activated: true,
+    activated_at: Time.zone.now
   )
 end

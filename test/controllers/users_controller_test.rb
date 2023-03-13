@@ -49,7 +49,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         admin: arg_bool
       }
     }
-    assert_not @other_user.admin, arg_bool
+    assert_not_equal @other_user.admin, arg_bool
   end
 
   test "should redirect destroy when not logged in" do
