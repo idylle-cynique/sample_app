@@ -20,5 +20,11 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
 
     # 演習問題
     assert_select "div.pagination", count: 1
+
+    # 演習問題 14.2
+    # log_in_as(@user)
+    get root_path
+    assert_match @user.followers.count.to_s, response.body
+    assert_match @user.following.count.to_s, response.body
   end
 end
