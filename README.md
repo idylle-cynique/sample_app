@@ -43,7 +43,4 @@ $ rails server
 詳しくは、[*Ruby on Rails チュートリアル*](https://railstutorial.jp/)
 を参考にしてください。
 
-
-ふが
-とくに意味のないテキスト
-meaningless text
+ほげ
