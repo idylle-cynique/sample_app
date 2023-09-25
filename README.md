@@ -44,5 +44,4 @@ $ rails server
 を参考にしてください。
 
 
-とくに意味のないテキスト
-meaningless text
+ほげ
