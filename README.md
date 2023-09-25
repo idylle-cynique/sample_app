@@ -45,4 +45,4 @@ $ rails server
 
 
 とくに意味のないテキスト
-meaningless text
+meaningless text 
