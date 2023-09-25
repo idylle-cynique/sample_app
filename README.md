@@ -44,5 +44,6 @@ $ rails server
 を参考にしてください。
 
 
+ふが
 とくに意味のないテキスト
 meaningless text
