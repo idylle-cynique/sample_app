@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails"
 gem "image_processing"
 gem "active_storage_validations"
-gem "bootstrap-sass"
+gem "bootstrap-sass", "~> 3.4.1"
 gem "sassc-rails"
 gem "sprockets-rails"
 gem "importmap-rails"
@@ -43,6 +43,3 @@ end
 group :production do
   gem "pg"
 end
-
-# Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
-# gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
