@@ -2,6 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem "rails"
+gem "thor", ">= 1.4.0"
 gem "image_processing"
 gem "active_storage_validations"
 gem "bootstrap-sass", "~> 3.4.1"
