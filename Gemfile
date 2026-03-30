@@ -22,6 +22,7 @@ gem "bootstrap-will_paginate"
 group :development, :test do
   gem "sqlite3"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "pry-rails"
 end
 
 group :development do
@@ -32,6 +33,7 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+  gem "webdrivers"
   gem "rails-controller-testing"
   gem "minitest"
   gem "minitest-reporters"
