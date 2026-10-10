@@ -25,6 +25,9 @@ class UsersIndexAdminTest < UsersIndexAdmin
   test "should paginate users" do
     # ユーザ一覧がページネーションを利用して表示れていることを確認
     assert_select 'div.pagination'
+    # 先頭ページでは「前へ」が無効、「次へ」が aria-label 付きで有効であることを確認
+    assert_select 'li.prev.disabled'
+    assert_select 'li.next a[rel=next][aria-label=?]', 'Next page'
   end
 
   test "should have delete links" do
