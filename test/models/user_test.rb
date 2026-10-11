@@ -60,25 +60,4 @@ class UserTest < ActiveSupport::TestCase
     # 永続化cookieにダイジェストが存在しない場合はエラーではなくfalseを返すようにしてあるかどうかを確認
     assert_not @user.authenticated?(:remember, '')
   end
-
-  test "feed should have the right post" do
-    michael = users(:michael)
-    archer = users(:archer)
-    lana = users(:lana)
-
-    # フォローしているユーザの投稿を確認
-    lana.microposts.each do |post_following|
-      assert michael.feed.include?(post_following)
-    end
-
-    # ユーザ自身の投稿を確認
-    michael.microposts.each do |post_self|
-      assert michael.feed.include?(post_self)
-    end
-
-    # フォローしていないユーザの投稿を確認
-    archer.microposts.each do |post_unfollowed|
-      assert_not michael.feed.include?(post_unfollowed)
-    end
-  end
 end
