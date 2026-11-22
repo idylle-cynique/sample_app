@@ -76,46 +76,47 @@ class PasswordUpdateTest < PasswordResetForm
   # 不適切なパスワードでは再設定ができない
   test "update with invalid password and confirmation" do
     patch password_reset_path(@reset_user.reset_token),
-      params: {
-        email: @reset_user.email,
-        user: {
-          password: 'foobaz',
-          password_confirmation: 'barquux'
-        }
-      }
+          params: {
+            email: @reset_user.email,
+            user: {
+              password: 'foobaz',
+              password_confirmation: 'barquux'
+            }
+          }
     assert_select 'div#error_explanation'
   end
 
   # 空のパスワード値ではパスワードの再設定ができない
   test "update with empty password" do
     patch password_reset_path(@reset_user.reset_token),
-      params: {
-        email: @reset_user.email,
-        user: {
-          password: '',
-          password_confirmation: ''
-        }
-      }
+          params: {
+            email: @reset_user.email,
+            user: {
+              password: '',
+              password_confirmation: ''
+            }
+          }
     assert_select 'div#error_explanation'
   end
 
   # 適切なパスワード値を入力することでパスワードの再設定が出来る
   test "update with valid password and confirmation" do
     patch password_reset_path(@reset_user.reset_token),
-      params: {
-        email: @reset_user.email,
-        user: {
-          password: 'foobaz',
-          password_confirmation: 'foobaz'
-        }
-      }
-    assert is_logged_in?
+          params: {
+            email: @reset_user.email,
+            user: {
+              password: 'foobaz',
+              password_confirmation: 'foobaz'
+            }
+          }
+    assert user_logged_in?
     assert_not flash.empty?
     assert_redirected_to @reset_user
   end
 end
 
 class ExpiredToken < PasswordResets
+  # 期限切れのトークンを用意し、パスワード再設定リクエストを送る
   def setup
     super
     post password_resets_path, params: {
@@ -124,6 +125,12 @@ class ExpiredToken < PasswordResets
     @reset_user = assigns(:user)
     # パスワード再設定用のトークンを意図的に期限切れにする
     @reset_user.update_attribute(:reset_sent_at, 3.hours.ago)
+    submit_expired_token
+  end
+
+  private
+
+  def submit_expired_token
     patch password_reset_path(@reset_user.reset_token), params: {
       email: @reset_user.email,
       user: {
@@ -141,6 +148,6 @@ class ExpiredTokenTest < ExpiredToken
 
   test "should include the word 'expired' on the password-reset page" do
     follow_redirect!
-    assert_match /expired/i, response.body
+    assert_match(/expired/i, response.body)
   end
 end

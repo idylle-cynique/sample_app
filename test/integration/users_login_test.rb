@@ -21,7 +21,7 @@ class InvalidPasswordTest < UsersLogin
     }
 
     # ログインに失敗し、画面遷移が行われていないことを確認
-    assert_not is_logged_in?
+    assert_not user_logged_in?
     assert_template 'sessions/new'
     assert_not flash.empty?
 
@@ -45,7 +45,7 @@ end
 
 class ValidLoginTest < ValidLogin
   test 'valid login' do
-    assert is_logged_in?
+    assert user_logged_in?
     assert_redirected_to @user
   end
 
@@ -68,7 +68,7 @@ end
 class LogoutTest < Logout
   test 'successful logout' do
     # ログアウト処理を行った際にたしかにログアウト処理が行われ、ルート―ページに遷移していることを確認する
-    assert_not is_logged_in?
+    assert_not user_logged_in?
     assert_response :see_other
     assert_redirected_to root_url
   end

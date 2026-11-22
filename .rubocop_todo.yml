@@ -52,7 +52,7 @@ Layout/IndentationWidth:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/helpers/application_helper.rb'
-    - 'exmaple_user.rb'
+    - 'example_user.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -93,7 +93,7 @@ Layout/SpaceInsidePercentLiteralDelimiters:
 Layout/TrailingEmptyLines:
   Exclude:
     - 'app/controllers/static_pages_controller.rb'
-    - 'exmaple_user.rb'
+    - 'example_user.rb'
     - 'test/test_helper.rb'
 
 # Offense count: 1
@@ -127,10 +127,7 @@ Style/Documentation:
     - 'app/models/application_record.rb'
     - 'app/models/user.rb'
     - 'config/application.rb'
-    - 'db/migrate/20221107040454_create_users.rb'
-    - 'db/migrate/20230216042751_add_index_to_users_email.rb'
-    - 'db/migrate/20230220030631_add_password_digest_to_users.rb'
-    - 'exmaple_user.rb'
+    - 'example_user.rb'
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
@@ -209,3 +206,19 @@ Style/StringLiterals:
 Style/SymbolArray:
   EnforcedStyle: percent
   MinSize: 10
+
+# Rails が生成するスキーマの形式を維持する
+Layout/LineLength:
+  Exclude:
+    - 'db/schema.rb'
+
+Style/WordArray:
+  Exclude:
+    - 'db/schema.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
+    # 関連する RSpec のテストケースを同じグループにまとめる
+    - 'spec/models/user_spec.rb'
+    - 'spec/requests/static_pages_spec.rb'

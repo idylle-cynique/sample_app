@@ -2,6 +2,7 @@ class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: [:destroy]
 
+  # ログイン中のユーザーの投稿を保存し、失敗したらエラーとフィードを再表示する
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
@@ -9,8 +10,7 @@ class MicropostsController < ApplicationController
       flash[:success] = 'Micropost created!'
       redirect_to root_url
     else
-      @feed_items = current_user.feed.paginate(page: params[:page])
-      render 'static_pages/home', status: :unprocessable_entity
+      render_feed_with_errors
     end
   end
 
@@ -21,6 +21,12 @@ class MicropostsController < ApplicationController
   end
 
   private
+
+  # 保存に失敗した投稿と、指定されたページのフィードを表示する
+  def render_feed_with_errors
+    @feed_items = current_user.feed.paginate(page: params[:page])
+    render 'static_pages/home', status: :unprocessable_entity
+  end
 
   def micropost_params
     params.require(:micropost).permit(:content, :image)

@@ -4,8 +4,8 @@ class UsersSignup < ActionDispatch::IntegrationTest
     ActionMailer::Base.deliveries.clear
   end
 end
-class UsersSignupTest < UsersSignup
 
+class UsersSignupTest < UsersSignup
   test "invalid signup information" do
     # 入力内容が適切でない状態でサインアップしたときのテスト
     get signup_path
@@ -63,19 +63,19 @@ class AccountActivationTest < UsersSignup
   test "should not be able to log in before account activation" do
     # アカウントの有効化が完了していない場合、ログイン処理ができないことを確認
     log_in_as(@user)
-    assert_not is_logged_in?
+    assert_not user_logged_in?
   end
 
   test "should not be able to log in with invalid activation token" do
     # 不適切なアクティベーショントークンでは有効化処理を完了できないことを確認
     get edit_account_activation_path("invalid_token", email: @user.email)
-    assert_not is_logged_in?
+    assert_not user_logged_in?
   end
 
   test "should not be able to log in with invalid email" do
     # 不適切なメールアドレスでは有効化処理を完了できないことを確認
     get edit_account_activation_path(@user.activation_token, email: 'wrong')
-    assert_not is_logged_in?
+    assert_not user_logged_in?
   end
 
   test "shoud log in successfully with valid activation_token and valid email" do
@@ -84,6 +84,6 @@ class AccountActivationTest < UsersSignup
 
     follow_redirect!
     assert_template 'users/show'
-    assert is_logged_in?
+    assert user_logged_in?
   end
 end

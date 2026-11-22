@@ -47,13 +47,13 @@ RSpec.describe User, type: :model do
 
     context "文字数を検証する場合" do
       it "255文字のとき、有効になる" do
-        email = "a" * 243 + "@example.com"
+        email = "#{'a' * 243}@example.com"
 
         expect(build(:user, email: email)).to be_valid
       end
 
       it "256文字のとき、無効になる" do
-        email = "a" * 244 + "@example.com"
+        email = "#{'a' * 244}@example.com"
         user = build(:user, email: email)
 
         expect(user).to be_invalid

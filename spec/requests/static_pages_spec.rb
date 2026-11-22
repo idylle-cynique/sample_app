@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "静的ページ", type: :request do
-  BASE_TITLE = "Ruby on Rails Tutorial Sample App"
+  base_title = "Ruby on Rails Tutorial Sample App"
 
   describe "ページ表示" do
     {
-      "/" => ["Welcome to the Sample App", BASE_TITLE],
-      "/help" => ["Help", "Help | #{BASE_TITLE}"],
-      "/about" => ["About", "About | #{BASE_TITLE}"],
-      "/contact" => ["Contact", "Contact | #{BASE_TITLE}"]
+      "/" => ["Welcome to the Sample App", base_title],
+      "/help" => ["Help", "Help | #{base_title}"],
+      "/about" => ["About", "About | #{base_title}"],
+      "/contact" => ["Contact", "Contact | #{base_title}"]
     }.each do |path, (heading, title)|
       context "#{path}を取得する場合" do
         it "ページ取得時に成功応答と見出し・タイトルを返す" do
