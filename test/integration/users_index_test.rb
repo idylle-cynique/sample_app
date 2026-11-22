@@ -16,7 +16,6 @@ class UsersIndexAdmin < UsersIndex
 end
 
 class UsersIndexAdminTest < UsersIndexAdmin
-
   test "should render the index page" do
     # ユーザ一覧ページが表示されていることを確認
     assert_template 'users/index'
@@ -35,9 +34,7 @@ class UsersIndexAdminTest < UsersIndexAdmin
     first_page_of_users = User.where(activated: true).paginate(page: 1)
     first_page_of_users.each do |user|
       assert_select 'a[href=?]', user_path(user), text: user.name
-      unless user == @admin
-        assert_select 'a[href=?]', user_path(user), text: 'delete'
-      end
+      assert_select 'a[href=?]', user_path(user), text: 'delete' unless user == @admin
     end
   end
 
