@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "モバイルナビゲーション", type: :system do
   before do
-    driven_by :selenium, using: :chrome
+    driven_by :selenium, using: :headless_chrome
   end
 
   describe "ハンバーガーメニュー" do

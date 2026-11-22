@@ -26,19 +26,30 @@ RSpec.describe "静的ページ", type: :request do
 
   describe "ゲスト向けナビゲーション" do
     context "ホームを取得する場合" do
-      it "ホーム取得時に各リンクが正しいパスを指す" do
+      it "ホームを取得したとき、ヘッダーとフッターのリンクが正しいパスを指す" do
         get root_path
 
-        {
-          "Home" => root_path,
-          "Help" => help_path,
-          "Log in" => login_path,
-          "About" => about_path,
-          "Contact" => contact_path,
-          "Sign up now!" => signup_path
-        }.each do |label, path|
-          expect(response.body).to include(%(href="#{path}">#{label}</a>))
+        document = response.parsed_body
+        header_links = document.css("header a").map do |link|
+          [link.text.strip, link["href"]]
         end
+        footer_links = document.css("footer a").map do |link|
+          [link.text.strip, link["href"]]
+        end
+        page_links = document.css("a").map do |link|
+          [link.text.strip, link["href"]]
+        end
+
+        expect(header_links).to include(
+          ["Home", root_path],
+          ["Help", help_path],
+          ["Log in", login_path]
+        )
+        expect(footer_links).to include(
+          ["About", about_path],
+          ["Contact", contact_path]
+        )
+        expect(page_links).to include(["Sign up now!", signup_path])
       end
     end
   end
