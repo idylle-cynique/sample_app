@@ -1,5 +1,14 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  inherit_mode:
+    merge:
+      - Exclude
+  Exclude:
+    - 'db/migrate/**/*'
 
 Documentation:
   Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
