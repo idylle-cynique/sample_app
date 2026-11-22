@@ -2,7 +2,6 @@ require "test_helper"
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-
     # 1. ログイン用のパスを開く
     get login_path
 

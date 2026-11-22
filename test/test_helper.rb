@@ -11,8 +11,8 @@ class ActiveSupport::TestCase
   # test/fixtures/*.ymlにあるすべてのfixtureをセットアップする
   fixtures :all
 
-  # （すべてのテストで使うその他のヘルパーメソッドは省略
-  def is_logged_in?
+  # テスト用のセッションにユーザー ID があるかを返す
+  def user_logged_in?
     !session[:user_id].nil?
   end
 end
