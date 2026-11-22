@@ -16,11 +16,14 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4.4"
+          ruby-version: "3.4.13"
           bundler-cache: true
 
       - name: Prepare database
         run: bin/rails db:test:prepare
 
-      - name: Run tests
+      - name: Run Minitest
         run: bin/rails test
+
+      - name: Run RSpec
+        run: bundle exec rspec
