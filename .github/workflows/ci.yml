@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -27,3 +27,6 @@ jobs:
 
       - name: Run RSpec
         run: bundle exec rspec
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
