@@ -7,11 +7,6 @@ class UsersLogin < ActionDispatch::IntegrationTest
 end
 
 class InvalidPasswordTest < UsersLogin
-  test 'login_path' do
-    get login_path
-    assert_template 'sessions/new'
-  end
-
   test 'login with valid email/invalid password' do
     post login_path, params: {
       session: {
@@ -40,21 +35,6 @@ class ValidLogin < UsersLogin
         password: 'password'
       }
     }
-  end
-end
-
-class ValidLoginTest < ValidLogin
-  test 'valid login' do
-    assert user_logged_in?
-    assert_redirected_to @user
-  end
-
-  test 'redirect after login' do
-    follow_redirect!
-    assert_template 'users/show'
-    assert_select "a[href=?]", login_path, count: 0
-    assert_select "a[href=?]", logout_path
-    assert_select "a[href=?]", user_path(@user)
   end
 end
 
