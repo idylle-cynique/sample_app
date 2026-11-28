@@ -16,20 +16,17 @@ class UserTokenTest < ActiveSupport::TestCase
     assert_nil user.reload.remember_digest
   end
 
-  test 'session_token は remember_digest があればその値を返し変更しない' do
+  test 'session_token の読み取りで記憶ダイジェストを共有しない' do
     user = users(:michael)
     user.remember
-    digest = user.remember_digest
-    assert_equal digest, user.session_token
-    assert_equal digest, user.reload.remember_digest
+    assert_nil user.session_token
+    assert user.reload.authenticated?(:remember, user.remember_token)
   end
 
-  test 'session_token は remember_digest が無ければ remember して新しい値を返す' do
+  test 'session_token の読み取りで記憶ダイジェストを作らない' do
     user = users(:michael)
-    assert_nil user.remember_digest
-    token = user.session_token
-    assert_not_nil token
-    assert_equal token, user.reload.remember_digest
+    assert_nil user.session_token
+    assert_nil user.reload.remember_digest
   end
 
   test 'activate は activated を true にし activated_at を現在時刻にする' do

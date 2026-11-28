@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
+  # ログインフォームを表示する。
   def new; end
 
-  # 認証情報を確認し、有効化済みのユーザーをログインさせる
+  # 入力されたメールアドレスとパスワードを照合し、有効化済みのユーザーをログインさせる。
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if !user&.authenticate(params[:session][:password])
@@ -13,8 +14,9 @@ class SessionsController < ApplicationController
     end
   end
 
+  # ログイン中ならセッションを解除し、ルートへ 303 でリダイレクトする。
   def destroy
-    log_out if logged_in?
+    log_out
     redirect_to root_url, status: :see_other
   end
 
@@ -24,12 +26,14 @@ class SessionsController < ApplicationController
   def start_user_session(user)
     forwarding_url = session[:forwarding_url]
     reset_session
-    params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-    log_in user
+    log_in user, remember_me: params[:session][:remember_me] == '1'
+    flash[:success] = 'Logged in.'
     redirect_to forwarding_url || user
   end
 
+  # 送信されたメールアドレスを保持してログインフォームを 422 で再表示する。
   def render_invalid_credentials
+    @email = params[:session][:email]
     flash.now[:danger] = 'Invalid email/password combination'
     render 'new', status: :unprocessable_entity
   end
