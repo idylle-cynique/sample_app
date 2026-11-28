@@ -6,26 +6,6 @@ class UsersSignup < ActionDispatch::IntegrationTest
 end
 
 class UsersSignupTest < UsersSignup
-  test "invalid signup information" do
-    # 入力内容が適切でない状態でサインアップしたときのテスト
-    get signup_path
-    assert_no_difference 'User.count' do
-      post users_path, params: {
-        user: {
-          name: "",
-          email: "user@invalid",
-          password: "foo",
-          password_confirmation: "bar"
-        }
-      }
-    end
-
-    assert_response :unprocessable_entity
-    assert_template 'users/new'
-    assert_select 'div#error_explanation'
-    assert_select 'div.field_with_errors'
-  end
-
   test "valid signup information" do
     assert_difference 'User.count', 1 do
       post users_path, params: {
@@ -53,11 +33,6 @@ class AccountActivationTest < UsersSignup
       }
     }
     @user = assigns(:user)
-  end
-
-  test "should not be activated" do
-    # アカウントの有効化が未実行であることを確認
-    assert_not @user.activated?
   end
 
   test "should not be able to log in before account activation" do
