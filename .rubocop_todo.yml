@@ -220,5 +220,4 @@ Metrics/BlockLength:
   Exclude:
     - 'db/schema.rb'
     # 関連する RSpec のテストケースを同じグループにまとめる
-    - 'spec/models/user_spec.rb'
-    - 'spec/requests/static_pages_spec.rb'
+    - 'spec/**/*_spec.rb'
