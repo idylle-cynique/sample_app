@@ -36,6 +36,7 @@ class PasswordResetsController < ApplicationController
 
   # 新しいセッションでログインし、再設定トークンを無効化してプロフィールに移動する
   def complete_password_reset
+    @user.remember
     reset_session
     log_in @user
     @user.update_attribute(:reset_digest, nil)

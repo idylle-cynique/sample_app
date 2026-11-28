@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
 
   # ログイン中ならセッションを解除し、ルートへ 303 でリダイレクトする。
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url, status: :see_other
   end
 
@@ -26,7 +26,8 @@ class SessionsController < ApplicationController
   def start_user_session(user)
     forwarding_url = session[:forwarding_url]
     reset_session
-    log_in user, remember_me: params[:session][:remember_me] == '1'
+    params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+    log_in user
     flash[:success] = 'Logged in.'
     redirect_to forwarding_url || user
   end
