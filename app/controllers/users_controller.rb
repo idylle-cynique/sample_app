@@ -3,8 +3,9 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
+  # 有効化済みユーザーの一覧を ID 順に並べ、指定されたページを表示する。
   def index
-    @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.where(activated: true).order(:id).paginate(page: params[:page])
   end
 
   def show
